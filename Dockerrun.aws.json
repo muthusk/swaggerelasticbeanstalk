@@ -1,0 +1,43 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "tmpfolder",
+      "host": {
+        "sourcePath": "/var/app/current/defaults.json"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "SwaggerEditor",
+      "image": "swaggerapi/swagger-editor:latest",
+      "essential": true,
+      "memory": 256,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8080
+        }
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "tmpfolder",
+          "containerPath": "/editor/config/defaults.json"
+        }
+      ]
+    },
+	{
+      "name": "SwaggerGenerator",
+      "image": "swaggerapi/swagger-generator:latest",
+      "essential": true,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 8080,
+          "containerPort": 8080
+        }
+      ]
+    }
+  ]
+}
